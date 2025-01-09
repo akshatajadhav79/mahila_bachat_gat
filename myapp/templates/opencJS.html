@@ -1,0 +1,73 @@
+{% block content %}
+<h1>Camera Access Live Face Recognition</h1>
+<video id="video" width="640" height="480" autoplay></video>
+<canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+<button id="capture">Capture Image</button>
+
+<script>
+    async function accessCamera() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const video = document.getElementById('video');
+            video.srcObject = stream;
+            video.onloadedmetadata = () => {
+                video.play();
+                console.log("Camera access granted");
+            };
+        } catch (err) {
+            console.error("Error accessing camera: ", err);
+        }
+    }
+
+    // Capture image function
+    function captureImage() {
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        
+        // Ensure the video is playing and the canvas is properly sized
+        if (video.videoWidth > 0 && video.videoHeight > 0) {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert canvas to a Blob
+            canvas.toBlob(async (blob) => {
+                const formData = new FormData();
+                formData.append('image', blob, 'photo.jpg');
+
+                // Send image to server
+                await fetch('/process_image/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            }, 'image/jpeg');
+        } else {
+            console.log('Video stream is not yet available.');
+        }
+    }
+
+    // Start camera and setup periodic capture
+    function startCamera() {
+        accessCamera();
+
+        // Schedule to capture image every 10 minutes (600,000 milliseconds)
+        setInterval(captureImage, 600000); // 10 minutes in milliseconds
+
+        // Also capture image on button click
+        document.getElementById('capture').addEventListener('click', captureImage);
+    }
+
+    window.onload = startCamera;
+</script>
+{% endblock content %}

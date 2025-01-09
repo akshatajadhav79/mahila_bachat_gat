@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% load static %}
+{% block main  %}
+    <div style="background-color: white; height: 2px;"></div>
+    <div>
+      <img src="{% static 'images/c1.webp' %}" class="img-fluid" style="width: 100%; height: 50%;" />
+    </div>
+    <div class="row m-5 p-2">
+      <div class="col-sm-6 p-2">
+        <div class="heading_container">
+          <h2>Want to join <span>Team ?</span></h2>
+        </div>
+        <h5 class="heading_container text-black-50">Alone we can do little, Together we can do so much.</h5>
+        
+        Believing in above we need people who are like minded and who can work according to the Vision, Mission and Goal of the Society to join us.
+        
+        Choosing where to start your professional life is a crucial decision. You are a balance between your career and your life, which is often talked about, yet not usually attended.
+        
+        As a rapidly growing society, we look to induct talent from various reputed business schools/educational institutes across the country. Enthusiastic and talented youth form the backbone of our operations and will become our future leaders. 
+        
+        So come and match your unique career with our unique firm.
+        <div class="btn-box pt-5">
+          <a href="" class="btn2">Apply For Job</a>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <img src="{% static 'images/career-growth.webp' %}" class="img-fluid" alt="my">
+      </div>
+    </div>
+
+{% endblock main %}

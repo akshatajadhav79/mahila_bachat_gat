@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <title>Custmer login</title>
+    <link rel="preconnect" href="{% static '/asstes/css/mystyle.css' %}" />
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mybootstrap.css' %}" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!-- owl slider stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <!-- font awesome style -->
+    <link href="{% static 'css/myfont-awesome.min.css' %}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/mystyle.css' %}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{% static 'css/myresponsive.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Outer Row -->
+      <div class="row justify-content-center">
+        <div class="col-xl-5 col-lg-7 col-md-9">
+          <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-5">
+              <form class="form-signin" action="" method="post">
+                {% csrf_token %}
+                <div class="text-center mb-4">
+                  <img class="mb-4" src="{% static 'images\n.jpg' %}" alt="" width="72" height="72" />
+                  {% if fc %}
+                  <h1 class="h3 mb-3 font-weight-normal" style="color:#da7426">Face Login</h1>
+                  {% else %}
+                  <h1 class="h3 mb-3 font-weight-normal" style="color:#da7426">Login</h1>
+                  {% endif %}
+                </div>
+                {% include "alert.html" %}
+                {% if fc %}
+                <div class="form-label-group">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus=""  />
+                </div>
+                <div class="checkbox mb-3 pt-2 "></div>
+                <button class="btn btn-lg btn-primary btn-block" style="background-color:#da7426"  id="capture">Face Login</button>
+                {% else %}
+                <div class="form-label-group">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus=""  />
+                </div>
+
+                <div class="form-label-group pt-2">
+                  <label for="inputPassword">Password</label>
+                  <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required/>
+                </div>
+
+                <div class="checkbox mb-3 pt-2 "></div>
+                <button class="btn btn-lg btn-primary btn-block" style="background-color:#da7426" type="submit" name="submit" value="Sign_in">Sign in</button>
+                {% endif %}
+              </form>
+              <hr />
+              {% if fc %}
+              <div class="text-center">
+                <a class="small" href="/customer/cust_login">Login</a>
+              </div>
+              {% else %}
+              <div class="text-center">
+                <a class="small" href="/customer/f_login">Face Login</a>
+              </div>
+              {% endif %}
+              <div class="text-center">
+                <a class="small" href="/customer/cust_forgetPass">Forgot Password?</a>
+              </div>
+              <div class="text-center">
+                <a class="small" href="/customer/cust_register">Create an Account!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--For face login code-->
+    <h1>Camera Access Live Face Recognition</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480" style="display:none !important;"></canvas>
+
+    <script>
+      async function accessCamera() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+          const video = document.getElementById('video')
+          video.srcObject = stream
+          video.onloadedmetadata = () => {
+            video.play()
+            console.log('Camera access granted')
+          }
+        } catch (err) {
+          console.error('Error accessing camera: ', err)
+        }
+      }
+      
+      async function captureImage() {
+        const video = document.getElementById('video')
+        const canvas = document.getElementById('canvas')
+        const user = document.getElementById('username').value
+        const context = canvas.getContext('2d')
+      
+        console.log('Username:', user)
+      
+        if (video.videoWidth > 0 && video.videoHeight > 0) {
+          canvas.width = video.videoWidth
+          canvas.height = video.videoHeight
+          context.drawImage(video, 0, 0, canvas.width, canvas.height)
+      
+          canvas.toBlob(async (blob) => {
+            const formData = new FormData()
+            formData.append('image', blob, 'photo.jpg')
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value
+      
+            try {
+              const response = await fetch(`/customer/face_login/${encodeURIComponent(user)}/`, {
+                  method: 'POST',
+                  body: formData,
+                  headers: {
+                      'X-CSRFToken': csrfToken
+                  }
+              })
+      
+              const textResponse = await response.text() // Read response as text for debugging
+              console.log('Response Text:', textResponse) // Log the response text
+      
+              if (response.ok) {
+                  try {
+                      const data = JSON.parse(textResponse)
+                      if (data.status === 'success') {
+                          alert('Face match found!')
+                          window.location.href = data.redirect_url; // Redirect to new page
+                      } else {
+                          alert('Face match not found.')
+                      }
+                  } catch (jsonError) {
+                      console.error('Error parsing JSON:', jsonError)
+                  }
+              } else {
+                  throw new Error(`HTTP error! Status: ${response.status}`)
+              }
+          } catch (error) {
+              console.error('Error:', error)
+          }
+          }, 'image/jpeg')
+        } else {
+          console.log('Video stream is not yet available.')
+        }
+      }
+      
+      function startCamera() {
+        accessCamera()
+        document.getElementById('capture').addEventListener('click', captureImage)
+      }
+      
+      window.onload = startCamera
+    </script>
+
+    <!--End -->
+  </body>
+</html>

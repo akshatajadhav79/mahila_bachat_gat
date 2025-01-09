@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Akshu</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/mybootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/myfont-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/myresponsive.css' %}" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+  </head>
+
+  <body>
+    <!-- Hero Section -->
+    <div class="hero_area" style="background-image: url('{% static 'images/hero-bg.jpg' %}');">
+      <!-- Header Section -->
+      <header class="header_section">
+        <div class="header_bottom" style="background-color: #159ec0;">
+          <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+              <a class="navbar-brand" href="#">
+                {% comment %} <img class="img-fluid" src="{% static 'images/loga1.png' %}" alt="" width="40px" height="2x0px" class="img-responsive" /> {% endcomment %}
+                <h6 class="text-capitalize text-wrap text-light embed-responsive" style=" color: #01E1B8;"><strong>WED</strong>Planpro</h6>
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+              <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                  <!-- Left side: Services dropdown -->
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Services</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="/service1/">Service 1</a>
+                      <a class="dropdown-item" href="/service2/">Service 2</a>
+                      <a class="dropdown-item" href="/service3/">Service 3</a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <!-- JQuery -->
+    <script src="{% static 'js/myjquery-3.4.1.min.js' %}"></script>
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'js/mybootstrap.js' %}"></script>
+    <!-- Owl Carousel JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/mycustom.js' %}"></script>
+  </body>
+</html>

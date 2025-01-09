@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="preconnect" href="{% static '/asstes/css/mystyle.css' %}" />
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mybootstrap.css' %}" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!-- owl slider stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <!-- font awesome style -->
+    <link href="{% static 'css/myfont-awesome.min.css' %}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/mystyle.css' %}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{% static 'css/myresponsive.css' %}" rel="stylesheet" />
+  </head>
+
+  <body style="background-color: hsl(0, 0%, 96%)">
+    <!-- Section: Design Block -->
+    <section class="">
+      <div class="col-5 mx-auto mt-5">
+        <div class="card" style="height:auto; box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; border: 2px;">
+            <div class="row p-1 py-4">
+                <div class="col-md-12 justify-content-center">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 py-1 text-center">
+                            <i class="bi bi-person-circle" style="color: blue; font-size: 3.8em;"></i>
+                            <h2 style="color:#da7426"> Forget Password</h2>
+                        </div>
+                    </div>
+                    <div class="row py-1 justify-content-center">
+                    <div class="small mt-2 col-md-8">Enter your email address and we will send you a link to reset your password.</div>
+                    </div>
+                    <form class="py-4" action="" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      {% include 'alert.html' %}
+                      {% if org %}
+                        <div class="row py-1 justify-content-center">
+                            <div class="col-md-8">
+                                <label for="">Email</label>
+                                <input type="email" class="form-control"  name="email">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <label for="">Password</label>
+                                <input type="text" class="form-control"  name="password">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                          <div class="col-md-8">
+                              <label for="">Confirm Password</label>
+                              <input type="text" class="form-control"  name="cpassword">
+                          </div>
+                      </div>
+                        <div class="row py-3 justify-content-center">
+                            <div class="col-md-8">
+                                <button class="btn btn-success w-100" style="background-color:#da7426" type="submit" name="submit" value="Reset">Reset Password</button>
+                            </div>
+                        </div>
+
+                        {% else %}
+                        <div class="row py-1 justify-content-center">
+                          <div class="col-md-8">
+                              <label for="">Email</label>
+                              <input type="email" class="form-control"  name="email">
+                          </div>
+                        </div>
+                        
+                        <div class="row py-3 justify-content-center">
+                          <div class="col-md-8">
+                              <button class="btn btn-success w-100" style="background-color:#da7426" type="submit" name="submit" value="send">Send Mail</button>
+                          </div>
+                        </div>
+
+                        {% endif %}
+
+                        <div class="row py-2 justify-content-center">
+                          <div class="col-md-8 justify-content-center text-center">
+                              <label>Need an account? </label>
+                              <a href="/customer/cust_register"
+                                  style="text-decoration: none">Sign up!</a>
+                          </div>
+                        </div>
+                        <div class="row py-2 justify-content-center">
+                          <div class="col-md-8 justify-content-center text-center">
+                          <a class="large" href="/customer/cust_login">Return to Login</a>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+      <!-- Jumbotron -->
+    </section>
+  </body>
+</html>

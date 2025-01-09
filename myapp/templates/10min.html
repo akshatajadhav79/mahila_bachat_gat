@@ -1,0 +1,91 @@
+{% block content %}
+  {% include 'alert.html' %}
+
+  <h1>Camera Access Live Face Recognition</h1>
+  <video id="video" width="640" height="480" autoplay></video>
+  <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+
+  <div id="modal" style="display: none;">
+    <div class="modal-content">
+      <p id="modal-message">Face match not found.</p>
+      <button id="login-button">Login</button>
+      <button id="cancel-button">Cancel</button>
+    </div>
+  </div>
+  
+
+  <script>
+    async function accessCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+        const video = document.getElementById('video')
+        video.srcObject = stream
+        video.onloadedmetadata = () => {
+          video.play()
+        }
+        console.log('Camera access granted')
+      } catch (err) {
+        console.error('Error accessing camera: ', err)
+      }
+    }
+    
+    function captureImage() {
+      const video = document.getElementById('video')
+      const canvas = document.getElementById('canvas')
+      const context = canvas.getContext('2d')
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+      context.drawImage(video, 0, 0, canvas.width, canvas.height)
+    
+      // Convert canvas to a Blob
+      canvas.toBlob(async (blob) => {
+        const formData = new FormData()
+        formData.append('image', blob, 'photo.jpg')
+    
+        // Send image to server
+        await fetch('/process_image/', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          }
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Success:', data)
+            if (data.status === 'success') {
+              alert(`Face match found! ${data.message}`)
+            } else {
+              showModal(data.message);
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error)
+          })
+      }, 'image/jpeg')
+    }
+    
+    function showModal(message) {
+      document.getElementById('modal-message').innerText = message;
+      document.getElementById('modal').style.display = 'flex';
+    
+      document.getElementById('login-button').onclick = function() {
+        // Handle login logic here
+        console.log('Login button clicked');
+        // Redirect or perform login action
+      };
+    
+      document.getElementById('cancel-button').onclick = function() {
+        // Close modal
+        document.getElementById('modal').style.display = 'none';
+      };
+    }
+
+    window.onload = () => {
+      accessCamera()
+    
+      // Capture image every 10 minutes (600,000 milliseconds)
+      setInterval(captureImage, 10000) // 600000 ms = 10 minutes
+    }
+  </script>
+{% endblock %}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+
+  <head>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Akshu</title>
+    <link rel="preconnect" href="{% static '/asstes/css/style.css' %}" />
+  </head>
+
+  <body>
+    {% include 'alert.html' %}
+  
+    <form id="login-form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required /><br /><br />
+      <button type="button" id="capture">Face Login</button>
+    </form>
+
+    <h1>Camera Access Live Face Recognition</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+
+    <script>
+      async function accessCamera() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+          const video = document.getElementById('video')
+          video.srcObject = stream
+          video.onloadedmetadata = () => {
+            video.play()
+            console.log('Camera access granted')
+          }
+        } catch (err) {
+          console.error('Error accessing camera: ', err)
+        }
+      }
+      
+      async function captureImage() {
+        const video = document.getElementById('video')
+        const canvas = document.getElementById('canvas')
+        const user = document.getElementById('username').value
+        const context = canvas.getContext('2d')
+      
+        console.log('Username:', user)
+      
+        if (video.videoWidth > 0 && video.videoHeight > 0) {
+          canvas.width = video.videoWidth
+          canvas.height = video.videoHeight
+          context.drawImage(video, 0, 0, canvas.width, canvas.height)
+      
+          canvas.toBlob(async (blob) => {
+            const formData = new FormData()
+            formData.append('image', blob, 'photo.jpg')
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value
+      
+            try {
+              const response = await fetch(`/face_login/${encodeURIComponent(user)}/`, {
+                  method: 'POST',
+                  body: formData,
+                  headers: {
+                      'X-CSRFToken': csrfToken
+                  }
+              })
+      
+              const textResponse = await response.text() // Read response as text for debugging
+              console.log('Response Text:', textResponse) // Log the response text
+      
+              if (response.ok) {
+                  try {
+                      const data = JSON.parse(textResponse)
+                      if (data.status === 'success') {
+                          alert('Face match found!')
+                          window.location.href = data.redirect_url; // Redirect to new page
+                      } else {
+                          alert('Face match not found.')
+                      }
+                  } catch (jsonError) {
+                      console.error('Error parsing JSON:', jsonError)
+                  }
+              } else {
+                  throw new Error(`HTTP error! Status: ${response.status}`)
+              }
+          } catch (error) {
+              console.error('Error:', error)
+          }
+          }, 'image/jpeg')
+        } else {
+          console.log('Video stream is not yet available.')
+        }
+      }
+      
+      function startCamera() {
+        accessCamera()
+        document.getElementById('capture').addEventListener('click', captureImage)
+      }
+      
+      window.onload = startCamera
+    </script>
+    
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <link rel="preconnect" href="{% static '/asstes/css/mystyle.css' %}" />
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mybootstrap.css' %}" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!-- owl slider stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <!-- font awesome style -->
+    <link href="{% static 'css/myfont-awesome.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/mystyle.css' %}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{% static 'css/myresponsive.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/AJ.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    {% include 'header.html' %}
+    <div style="background-color: white; height: 2px;"></div>
+    {% if val == 'Tw' %}
+      <div class="row p-5">
+        <div class="col-sm-6 col-md-6 col-6">
+          <img src="{% static 'images/TW.webp' %}" class="img-fluid" />
+        </div>
+        <div class="col-sm-6 col-md-6 col-6">
+          <p class="text-justify mt-3 p-3">
+            <h3 class="mb-4">Two-Wheeler Loan</h3>A Two-Wheeler Loan is specifically designed to finance the purchase of motorcycles or scooters. Offered by Sahayog Multistate Credit Co-operative Society Ltd., this loan can be either secured or unsecured, depending on the borrower’s creditworthiness and the lender’s policies.
+
+            Interest rates for two-wheeler loans may vary based on the lender and the borrower’s credit profile.
+            
+            Explore your options with us and ride home your dream two-wheeler today!</p>
+        </div>
+      </div>
+    {% elif val == 'jil' %}
+      <div class="row ">
+        <div class="col-sm-12 col-md-12 col-12">
+          <img src="{% static 'images/jll.webp' %}" class="img-fluid h-100" />
+        </div>
+      </div>
+      <div class="row p-5 m-5">
+        <div class="col-sm-12 col-md-12 col-12">
+          <p class="text-justify ">
+            <div class="heading_container">
+              <h2>JLL &nbsp;<span>Loan</span></h2>
+            </div><h3>What is Joint Liability Loan?</h3>
+            A Joint Liability Loan is a financial product taken out by multiple individuals, where each borrower is jointly and individually responsible for repaying the total loan amount. This means that if one borrower defaults, the remaining borrowers must still ensure the loan is repaid. This type of loan is particularly beneficial for individuals seeking to borrow a larger sum but may not qualify on their own. It also allows borrowers to share the responsibility of repayment, making it a practical option for collaborative financial efforts.
+            
+            Sahyog Multi State Credit Co-op. Society Ltd. offers a specialized financial assistance loan aimed at women in both rural and urban areas. In this scheme, the responsibility for repayment lies with both the individual member and the group as a whole. Our objective is to empower women to pursue small and medium businesses, ultimately enhancing their standard of living and fostering economic progress.
+            
+            </p>
+        </div>
+      </div>
+      </div>
+    {% elif val == 'DDLS' %}
+      <div class="row p-5">
+        <div class="col-sm-6 col-md-6 col-6">
+          <img src="{% static 'images/DDLS.webp' %}" class="img-fluid" />
+        </div>
+        <div class="col-sm-6 col-md-6 col-6">
+          <p class="text-justify mt-3 p-3">
+            <h3 class="mb-4">DAILY DEPOSIT TARAN LOAN SCHEME & LOAN AGAINST DAILY DEPOSIT</h3>offers a Daily Deposit Scheme designed to support account holders in enhancing their business potential. By making regular deposits, account holders can foster business growth and prosperity.
+
+            For added convenience, the institution provides a quick loan of 75% of the deposited amount. This loan is accessible through a streamlined process that meets the institution’s criteria, ensuring prompt support for our account holders.
+            
+            Empower your business with our Daily Deposit Scheme today!</p>
+        </div>
+      </div>
+    {% else %}
+      <h1>Not Fount Any service</h1>
+    {% endif %}
+
+    {% include 'footer.html' %}
+    <!-- jQery -->
+    <script type="text/javascript" src="{% static 'js/myjquery-3.4.1.min.js' %}"></script>
+    <!-- popper js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="{% static 'js/mybootstrap.js' %}"></script>
+    <!-- owl slider -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- custom js -->
+    <script type="text/javascript" src="{% static 'js/mycustom.js' %}"></script>
+    <!-- Google Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+    <!-- End Google Map -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

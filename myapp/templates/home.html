@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Akshu</title>
+    <link rel="preconnect" href="{% static '/asstes/css/mystyle.css' %}" />
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mybootstrap.css' %}" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!-- owl slider stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <!-- font awesome style -->
+    <link href="{% static 'css/myfont-awesome.min.css' %}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/mystyle.css' %}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{% static 'css/myresponsive.css' %}" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="hero_area">
+      {% include 'header.html' %}
+      <!-- slider section -->
+      <section class="slider_section">
+        <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="container">
+                <div class="detail-box">
+                  <h1>
+                    We Build <br />
+                    The Things Architects <br />
+                    Dream Up
+                  </h1>
+                  <div class="btn-box">
+                    <a href="" class="btn1">Read More</a>
+                    <a href="" class="btn2">Contact Us</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="container">
+                <div class="detail-box">
+                  <h1>
+                    We Build <br />
+                    The Things Architects <br />
+                    Dream Up
+                  </h1>
+                  <div class="btn-box">
+                    <a href="" class="btn1">Read More</a>
+                    <a href="" class="btn2">Contact Us</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="container">
+                <div class="detail-box">
+                  <h1>
+                    We Build <br />
+                    The Things Architects <br />
+                    Dream Up
+                  </h1>
+                  <div class="btn-box">
+                    <a href="" class="btn1">Read More</a>
+                    <a href="" class="btn2">Contact Us</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel_btn-box">
+            <a class="carousel-control-prev" href="#customCarousel1" role="button" data-slide="prev">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#customCarousel1" role="button" data-slide="next">
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+      </section>
+      <!-- end slider section -->
+    </div>
+
+    {% include 'footer.html' %}
+    <!-- jQery -->
+    <script type="text/javascript" src="{% static 'js/myjquery-3.4.1.min.js' %}"></script>
+    <!-- popper js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="{% static 'js/mybootstrap.js' %}"></script>
+    <!-- owl slider -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- custom js -->
+    <script type="text/javascript" src="{% static 'js/mycustom.js' %}"></script>
+    <!-- Google Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+    <!-- End Google Map -->
+  </body>
+</html>

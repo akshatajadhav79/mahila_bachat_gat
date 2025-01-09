@@ -1,0 +1,32 @@
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function showAlertMessages() {
+          const messages = document.querySelectorAll('.alert-message')
+          messages.forEach(function (message) {
+            const type = message.dataset.type
+            const messageText = message.textContent
+      
+            // Use a toast notification library or a notification component
+            // to display the message without blocking the execution of the code
+            toastNotification(messageText, type)
+          })
+        }
+      
+        showAlertMessages()
+      })
+      
+      // Example of a toast notification function
+      function toastNotification(message, type) {
+        const notificationElement = document.createElement('div')
+        notificationElement.className = `toast-notification ${type}`
+        notificationElement.textContent = message
+        document.body.appendChild(notificationElement)
+      
+        // Add animation and timeout to remove the notification after a few seconds
+        notificationElement.classList.add('animate')
+        setTimeout(function () {
+          notificationElement.remove()
+        }, 3000)
+      }
+</script>

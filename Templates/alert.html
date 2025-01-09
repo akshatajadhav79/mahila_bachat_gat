@@ -1,0 +1,66 @@
+{% comment %} {% if messages %}
+  {% for message in messages %}
+    <script>
+      setTimeout(function () {
+        alert('{{ message }}')
+      }, 100)
+    </script>
+  {% endfor %}
+{% endif %} {% endcomment %}
+
+{% if messages %}
+  {% for message in messages %}
+    {% if "error" == '{{message.tags}}' %}
+      <div class="alert alert-danger alert-dismissible fade show text-wrap" role="alert">
+        <strong>Message:</strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+    {% else %}
+      <div class="alert alert-success alert-dismissible fade show text-wrap" role="alert">
+        <strong>Message:</strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %} <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function showAlertMessages() {
+          messages.forEach(function (message) {
+            const type = message.dataset.type
+            const messageText = message.textContent
+      
+            // Use a toast notification library or a notification component
+            // to display the message without blocking the execution of the code
+            toastNotification(messageText, type)
+          })
+        }
+      
+        showAlertMessages()
+      })
+      
+      // Example of a toast notification function
+      function toastNotification(message, type) {
+        const notificationElement = document.createElement('div')
+        notificationElement.className = toast-notification ${type}
+        notificationElement.textContent = message
+        document.body.appendChild(notificationElement)
+      
+        // Add animation and timeout to remove the notification after a few seconds
+        notificationElement.classList.add('animate')
+        setTimeout(function () {
+          notificationElement.remove()
+        }, 3000)
+      }
+</script> {% endcomment %}
+
+{% if messages %}
+  {% for message in messages %}
+    <script>
+    showAlertMessages(function() {
+        alert("{{ message }}");
+    }, 100);
+</script>
+  {% endfor %}
+{% endif %}
