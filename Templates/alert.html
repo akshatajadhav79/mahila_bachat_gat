@@ -8,7 +8,7 @@
   {% endfor %}
 {% endif %} {% endcomment %}
 
-{% if messages %}
+{% comment %} {% if messages %}
   {% for message in messages %}
     {% if "error" == '{{message.tags}}' %}
       <div class="alert alert-danger alert-dismissible fade show text-wrap" role="alert">
@@ -22,7 +22,7 @@
       </div>
     {% endif %}
   {% endfor %}
-{% endif %}
+{% endif %} {% endcomment %}
 
 {% comment %} <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -57,10 +57,44 @@
 
 {% if messages %}
   {% for message in messages %}
-    <script>
-    showAlertMessages(function() {
-        alert("{{ message }}");
-    }, 100);
-</script>
+    {% if "error" in message.tags %}
+      <!-- Error message -->
+      <div class="alert alert-danger alert-dismissible fade show text-wrap" role="alert">
+        <strong>Message:</strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+    {% else %}
+      <!-- Success message -->
+      <div class="alert alert-success alert-dismissible fade show text-wrap" role="alert">
+        <strong>Message:</strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+    {% endif %}
   {% endfor %}
 {% endif %}
+
+
+<script>
+  // Assuming you make a POST request via AJAX and receive a JSON response
+  $.ajax({
+    url: 'your-url-here',
+    type: 'POST',
+    data: {
+      // your form data
+    },
+    success: function(response) {
+      if (response.status === 'success') {
+        // Display success message
+        alert('Success: ' + response.message);
+      } else {
+        // Display error message
+        alert('Error: ' + response.message);
+      }
+    },
+    error: function(xhr, status, error) {
+      // Handle error
+      console.log(error);
+    }
+  });
+</script>
+

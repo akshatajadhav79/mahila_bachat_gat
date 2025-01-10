@@ -1,6 +1,8 @@
+from sqlite3 import IntegrityError
 import traceback
 from django.shortcuts import render,redirect,HttpResponseRedirect
 from host.models import customer
+from myapp.models import cust_master
 from django.contrib import messages
 import os
 import datetime
@@ -48,13 +50,13 @@ def cust_login(request):
         password1= request.POST.get('password')
         
         if 'submit' in request.POST and request.POST['submit'] == "Sign_in":
-            if not customer.objects.filter(username=username1).exists():
+            if not cust_master.objects.filter(username=username1).exists():
                 messages.error(request,"Invalid Username ")
                 return redirect('/customer/cust_login') 
             else:
-                usern = customer.objects.filter(username=username1).exists()
+                usern = cust_master.objects.filter(username=username1).exists()
                 if usern == True:
-                    user=customer.objects.get(username=username1)
+                    user=cust_master.objects.get(username=username1)
                     if user.password == password1:
                         request.session['user_id'] = user.pk
                         request.session['user_email'] = user.email
@@ -94,13 +96,13 @@ def cust_register(request):
         password1 = request.POST.get('password')
         username1 = request.POST.get('username')
         cpassword1 = request.POST.get('password1')
-        profile_img = request.FILES.get('profile_image')
+        profile_img1 = request.FILES.get('profile_image')
         
         # Check if username or email already exists in the database
-        if customer.objects.filter(email=email1).exists():
+        if cust_master.objects.filter(email=email1).exists():
             messages.error(request, 'Email is already taken')
             return redirect(request.path_info)
-        elif customer.objects.filter(username=username1).exists():
+        elif cust_master.objects.filter(username=username1).exists():
             messages.error(request, 'Username is already taken')
             return redirect(request.path_info)
 
@@ -115,13 +117,14 @@ def cust_register(request):
                 # hashed_password = make_password(password1)
 
                 # Create the customer instance and save to the database
-                cust = customer.objects.create(
+                
+                cust = cust_master.objects.create(
                     username=username1,
                     password=cpassword1,
                     full_name=fname,
                     email=email1,
                     phone_number=contact,
-                    profile_image=profile_img,
+                    c_img=profile_img1,
                     is_active=True
                 )
                 cust.save()

@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends 'index.html' %}
 {% load static %}
 {% block main  %}
     <div style="background-color: white; height: 2px;"></div>
@@ -20,8 +20,9 @@
         
         So come and match your unique career with our unique firm.
         <div class="btn-box pt-5">
-          <a href="" class="btn2">Apply For Job</a>
+          <a href="" class="btn2 read-more">Apply For Job</a>
         </div>
+
       </div>
       <div class="col-sm-6">
         <img src="{% static 'images/career-growth.webp' %}" class="img-fluid" alt="my">
@@ -29,3 +30,4 @@
     </div>
 
 {% endblock main %}
+{% block about %}{% endblock about %}

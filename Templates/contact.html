@@ -38,21 +38,23 @@
         <div class="row">
           <div class="col-lg-4 col-md-5 offset-md-1">
             <div class="form_container">
-              <form action="">
+              <form action="" method="post">
+                {% csrf_token %}
+                {% include "alert.html" %}
                 <div>
-                  <input type="text" placeholder="Your Name" />
+                  <input type="text" name="name" placeholder="Your Name" />
                 </div>
                 <div>
-                  <input type="text" placeholder="Phone Number" />
+                  <input type="text" name="no" placeholder="Phone Number" />
                 </div>
                 <div>
-                  <input type="email" placeholder="Email" />
+                  <input type="email" name="email" placeholder="Email" />
                 </div>
                 <div>
-                  <input type="text" class="message-box" placeholder="Message" />
+                  <input type="text" name="msg" class="message-box" placeholder="Message" />
                 </div>
                 <div class="btn_box">
-                  <button>SEND</button>
+                  <button type="submit" name="submit">SEND</button>
                 </div>
               </form>
             </div>

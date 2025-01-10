@@ -482,12 +482,32 @@ def create_viewer_session(request):
         form = ViewerSessionForm()
     return render(request, 'create_viewer_session.html', {'form': form}) 
 
+from .models import service_master
 
 def logout(request):
     logout = ViewerSession.objects.get(pk = request.session.get('user_id'))
     return HttpResponseRedirect()
 
 def contact(request):
+    if request.method == "POST":
+        cname = request.POST.get('name')
+        cemail = request.POST.get('email')
+        cno = request.POST.get('no')
+        cmsg = request.POST.get('msg')
+        print(cname,cno,cmsg,cemail)
+         # Check if any field is empty
+        if cname == '' or cemail == '' or cno == '' or cmsg == '':
+            messages.error(request, "Please fill all fields")
+            return JsonResponse({'status': 'failure', 'message': 'Please fill all fields'}, status=400)  # Return HTTP status 400 for failure
+        
+        else:
+            # Create and save the contact
+            c = contact_master.objects.create(name=cname, email=cemail, phone_number=cno, msg=cmsg)
+            c.save()
+            
+            # Success message
+            messages.success(request, "Your response has been saved. Please visit again.")
+            return JsonResponse({'status': 'success', 'message': 'Your response has been saved. Please visit again.'}, status=200)
     return render(request,"contact.html")
 
 def Deposit(request,service):
@@ -523,5 +543,7 @@ def careers(request):
     return render(request,"careers.html",context)
 
 def otherser(request):
-    return render(request,"otherSer.html")
+    service = service_master.objects.all()
+    context = {"services":service}
+    return render(request,"otherSer.html",context)
 
